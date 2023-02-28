@@ -18,6 +18,7 @@
     "@shopify/cli": "3.29.0",
     "@shopify/cli-hydrogen": "^4.0.8",
     "@shopify/hydrogen": "^2023.1.5",
+    "@shopify/polaris": "^10.31.0",
     "@shopify/remix-oxygen": "^1.0.3",
     "graphql": "^16.6.0",
     "graphql-tag": "^2.12.6",

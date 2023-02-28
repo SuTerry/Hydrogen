@@ -6,13 +6,14 @@ import {
   ScrollRestoration,
   useLoaderData,
 } from '@remix-run/react';
+import { AppProvider } from '@shopify/polaris';
 import styles from './styles/app.css';
 import favicon from '../public/favicon.svg';
-import {Layout} from './components/Layout';
+import { Layout } from './components/Layout';
 
 export const links = () => {
   return [
-    {rel: 'stylesheet', href: styles},
+    { rel: 'stylesheet', href: styles },
     {
       rel: 'preconnect',
       href: 'https://cdn.shopify.com',
@@ -21,7 +22,11 @@ export const links = () => {
       rel: 'preconnect',
       href: 'https://shop.app',
     },
-    {rel: 'icon', type: 'image/svg+xml', href: favicon},
+    { rel: 'icon', type: 'image/svg+xml', href: favicon },
+    {
+      rel: 'stylesheet', 
+      href: 'https://unpkg.com/@shopify/polaris@10.31.0/build/esm/styles.css',
+    }
   ];
 };
 
@@ -30,30 +35,34 @@ export const meta = () => ({
   viewport: 'width=device-width,initial-scale=1',
 });
 
-export async function loader({context}) {
+export async function loader ({ context }) {
   const layout = await context.storefront.query(LAYOUT_QUERY);
-  return {layout};
+  return { layout };
 }
 
-export default function App() {
+export default function App () {
   const data = useLoaderData();
 
-  const {name} = data.layout.shop;
+  const { name } = data.layout.shop;
 
   return (
+
     <html lang="en">
       <head>
         <Meta />
         <Links />
       </head>
       <body>
-        <Layout title={name}>
-          <Outlet />
-        </Layout>
+        <AppProvider>
+          <Layout title={name}>
+            <Outlet />
+          </Layout>
+        </AppProvider>
         <ScrollRestoration />
         <Scripts />
       </body>
     </html>
+
   );
 }
 
